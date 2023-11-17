@@ -1,5 +1,5 @@
 # Launch School Core Curriculum
-***
+
 ## Back-End Courses
 - RB101/109d Programming Foundations with Ruby
 - RB120 Object Orietned Programming
