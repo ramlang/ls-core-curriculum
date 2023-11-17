@@ -1,0 +1,11 @@
+<html>
+  <title>My CMS App</title>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="/stylesheets/styles.css" type="text/css" />
+  <body>
+    <% if session[:message] %>
+      <p class="message"><%= session.delete(:message) %></p>
+    <% end %>
+    <%= yield %>
+  </body>
+</html>

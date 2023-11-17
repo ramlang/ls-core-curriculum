@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Space Design | Team</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="initial-scale=1.0" />
+    <link rel="stylesheet" href="site.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.2/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <script src="javascripts/modal.js"></script>
+
+    <script id="team_member_modal" type="text/x-handlebars">
+      <div id="modal">
+        <table>
+          <tr>
+            <td colspan="2" data-button="close">
+              <img src="https://d3jtzah944tvom.cloudfront.net/lesson_5/company_site_responsive_breakpoints/images/icon_close.png"/>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <img src={{image}}>
+            </td>
+            <td>
+              <h1>{{name}}</h1>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="2">
+              <p>{{bio}}</p>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </script>
+
+    <script>
+      const memberBios = {
+        kevin: "Wey wook",
+        louis: "it's widward",
+        kasper: "widward's woing to work",
+        chris: "where does he work?",
+      }
+
+      let template = Handlebars.compile($('#team_member_modal').html());
+      let $button;
+
+      $(function() {
+        $("li[data-name]").on('click', function(e) {
+          e.preventDefault();
+
+          let $li = $(this);
+          let member = {};
+
+          member.name = $li.data('name');
+          member.image = this.querySelector('img').src;
+          member.bio = memberBios[member.name];
+          
+          let modal = template(member);
+          $('body').prepend(modal);
+
+          $('.overlay').fadeToggle("slow", function() {
+            $("#modal").show().animate({
+              left: '50%',
+              width: '400px',
+              'margin-left': '-200px',
+            }, "slow");
+
+            $button = $("td[data-button]").find("img")
+            console.log($button);
+
+            $($button).on('click', function(e) {
+            e.preventDefault();
+            $("#modal").hide();
+            $('.overlay').fadeToggle("slow");
+          });
+          });
+        })
+      });
+    </script>
+  </head>
+  <body>
+      <div class="overlay"></div>
+      <header>
+        <h1>
+          <a href="home.html">SpaceDesign</a>
+        </h1>
+        <nav>
+          <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="team.html" class="active">Team</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <main>
+        <div id="team" class="column">
+          <article>
+            <h2>Team</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniadolor</p>
+            <ul>
+              <li data-name="kevin">
+                <a href="#">
+                  <img src="images/img_kevin.jpg" alt="Kevin Wang" />
+                  Kevin
+                </a>
+              </li>
+              <li data-name="louis">
+                <a href="#">
+                  <img src="images/img_louis.jpg" alt="Louis Burton" />
+                  Louis
+                </a>
+              </li>
+              <li data-name="kasper">
+                <a href="#">
+                  <img src="images/img_kasper.jpg" alt="Kasper Salto" />
+                  Kasper
+                </a>
+              </li>
+              <li data-name="chris">
+                <a href="#">
+                  <img src="images/img_chris.jpg" alt="Chris Lee" />
+                  Chris
+                </a>
+              </li>
+            </ul>
+          </article>
+        </div>
+      </main>
+
+      <footer>
+        <p>
+          Lorem ipsum dolor sit amet, consectetu
+          <br />
+          incididunt ut labore et dolore magna aliqua. Ut enim ad
+        </p>
+        <ul>
+          <li><a href="#" class="twitter">Twitter</a></li>
+          <li><a href="#" class="facebook">Facebook</a></li>
+          <li><a href="#" class="email">Email</a></li>
+          <li><a href="#" class="instagram">Instagram</a></li>
+        </ul>
+      </footer>
+  </body>
+</html>

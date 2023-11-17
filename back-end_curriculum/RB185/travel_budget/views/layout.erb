@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Travel Expenses</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=PT+Sans">
+    <link rel="stylesheet" href="/stylesheets/whitespace-reset.css">
+    <link rel="stylesheet" href="/stylesheets/travel_budget.css">
+    <script src="/javascripts/jquery-2.1.4.js"></script>
+    <script src="/javascripts/application.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Travel Expenses</h1>
+      <div class="actions">
+        <%== yield_content :header_links %>
+      </div>
+    </header>
+    <div class="container">
+      <% if session[:error] %>
+        <div class="flash error">
+          <p><%= session.delete(:error) %></p>
+        </div>
+      <% end %>
+      
+      <% if session[:success] %>
+        <div class="flash success">
+          <p><%= session.delete(:success) %></p>
+        </div>
+      <% end %>
+      
+      <main>
+        <%== yield %>
+      </main>
+      
+      <div class="total">
+        <%== yield_content :total %>
+      </div>
+    </div>
+  </body>
+</html>

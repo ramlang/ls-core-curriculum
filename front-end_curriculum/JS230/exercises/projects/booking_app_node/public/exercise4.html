@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Loading...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link href="vendor/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="vendor/prettify.css" rel="stylesheet" media="screen">
+  <link href="css/style.css" rel="stylesheet" media="screen, print">
+  <link href="img/favicon.ico" rel="icon" type="image/x-icon">
+  <style>
+
+    .exercise4 {
+      text-align: left;
+      display: block;
+      padding-left: auto;
+      padding-right: auto;
+      margin: 10px;
+    }
+
+    .exercise4 label {
+      margin-left: 20px;
+      color:burlywood;
+      font-size: 18px;
+    }
+
+    fieldset {
+      border: 3px solid wheat;
+      width: 50%;
+      margin: 10px;
+      background-color: cornsilk;
+      border-radius: 10px;
+
+    }
+
+    legend {
+      margin-left: 20px;
+      margin-bottom: 5px;
+      color: cornsilk;
+      border: solid 3px wheat;
+      background-color: wheat;
+      border-radius: 10px;
+      font-size: 24px;
+      padding: 10px;
+      width: auto;
+    }
+
+    .exercise4 input {
+      padding: 5px;
+      margin: 5px 30px;
+      border: 2px solid wheat;
+      border-radius: 5px;
+      color:burlywood;
+      background-color: white;
+      font-size: 18px;
+    }
+
+    select {
+      padding: 5px;
+      margin: 5px 30px;
+      border: 2px solid wheat;
+      border-radius: 5px;
+      color:burlywood;
+      background-color: white;
+      font-size: 18px;
+      width: 40%;
+    }
+
+    button {
+      background-color: lightpink;
+      color:white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      margin: 20px;
+    }
+  </style>
+  <script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+      let main = document.querySelector('main');
+      let fieldset = document.querySelector('fieldset');
+      let buttonAddMore = document.querySelector('.add-more');
+      let select = document.querySelector('select');
+      let buttonSubmit = document.querySelector('.submit');
+      let counter = 1;
+
+      fieldset.firstElementChild.textContent = `Schedule ${counter}`;
+
+      let xhr = new XMLHttpRequest();
+      xhr.open('GET', "http://localhost:3000/api/staff_members");
+      xhr.responseType = 'json';
+      xhr.timeout = 5000;
+      xhr.send();
+
+      xhr.addEventListener('loadend', () => {
+        let staffList = xhr.response;
+
+        staffList.forEach((staffMember) => {
+          let option = document.createElement('option');
+          option.value = staffMember.id;
+          option.textContent = staffMember.name;
+          select.appendChild(option);
+        });
+      });
+
+      buttonAddMore.addEventListener('click', () => {
+        let elementClone = fieldset.cloneNode(true);
+        let legendClone = elementClone.firstElementChild;
+
+        counter += 1;
+        legendClone.textContent = `Schedule ${counter}`;
+
+        main.appendChild(elementClone);
+      });
+
+      buttonSubmit.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        let forms = document.querySelectorAll('form');
+
+
+        function formDataToJSON(data) {
+          console.log(data);
+          const json = {};
+          json.staff_id = parseInt(data.get('staff_id'), 10);
+          json.date = data.get('date');
+          json.time = data.get('time');
+          return json;
+        }
+
+        function serializeMultiFormData(forms) {
+          return  Array.prototype.slice.call(forms).map((form) => {
+            let formData = new FormData(form);
+            return formDataToJSON(formData);
+          });
+        }
+
+        function resetAllForms(forms) {
+          return  Array.prototype.slice.call(forms).forEach((form) => {
+            form.reset();
+          });
+        }
+
+        let xhrPost = new XMLHttpRequest();
+        let data = {};
+        data.schedules = serializeMultiFormData(forms);
+        data = JSON.stringify(data);
+        xhrPost.open('POST', "http://localhost:3000/api/schedules");
+        xhrPost.setRequestHeader('Content-Type', 'application/json');
+
+        xhrPost.send(data);
+        xhrPost.addEventListener('loadend', (event) => {
+          console.log("world");
+          switch (xhrPost.status) {
+            case 201:
+              alert(xhrPost.response);
+              resetAllForms(forms);
+              break;
+            case 400:
+              alert(xhrPost.response);
+          }
+        });
+      });
+    });
+
+  </script>
+  </head>
+  <body>
+    <main>
+      <button class="add-more" type="button">Add More Schedules</button>
+      <fieldset>
+        <legend></legend>
+        <form method="post" action='http://localhost:3000/api/schedules' class="exercise4">
+          <label for="staff_list">Staff Name:</label>
+          <select name="staff_id" id="staff_list">
+          </select><br>
+
+          <label for="date">Date:</label>
+          <input type="date" id="date" name="date"/><br>
+
+          <label for="time">Time:</label>
+          <input type="time" id="time" name="time"/><br>
+        </form>
+      </fieldset>
+    </main>
+    <button class="submit" type="button">Submit</button>
+  </body>
+</html>
+
+
+

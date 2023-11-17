@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Loading...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link href="vendor/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="vendor/prettify.css" rel="stylesheet" media="screen">
+  <link href="css/style.css" rel="stylesheet" media="screen, print">
+  <link href="img/favicon.ico" rel="icon" type="image/x-icon">
+  <style>
+
+    form {
+      text-align: left;
+      display: block;
+      background-color: cornsilk;
+      border: 2px solid burlywood;
+      border-radius: 10px;
+      padding-left: auto;
+      padding-right: auto;
+      margin: 10px;
+    }
+
+    label {
+      margin-left: 20px;
+      color:burlywood;
+      font-size: 18px;
+    }
+
+    h1 {
+      margin-left: 20px;
+      margin-bottom: 5px;
+      color: burlywood;
+      font-size: 24px;
+      padding: 10px;
+      width: auto;
+    }
+
+    input {
+      padding: 5px;
+      margin: 5px 30px;
+      border: 2px solid wheat;
+      border-radius: 5px;
+      color:burlywood;
+      background-color: white;
+      font-size: 18px;
+    }
+
+    select {
+      padding: 5px;
+      margin: 5px 30px;
+      border: 2px solid wheat;
+      border-radius: 5px;
+      color:burlywood;
+      background-color: white;
+      font-size: 18px;
+      width: 40%;
+    }
+
+    button {
+      background-color: lightpink;
+      color:white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      margin: 20px;
+    }
+  </style>
+  <script>
+    // Implement two functions: one for cancelling schedules and the other for cancelling of bookings. The functions take a scheduleId and a bookingId as arguments respectively.
+
+    function cancelSchedule(scheduleId) {
+      let xhr = new XMLHttpRequest();
+      xhr.open('DELETE', `http://localhost:3000/api/schedules/${scheduleId}`)
+      xhr.responseType = 'json';
+      xhr.send();
+
+      xhr.addEventListener('load', (event) => {
+        switch (xhr.status) {
+          case 204:
+            alert("Schedule has been cancelled :)");
+            break;
+          default:
+            alert(xhr.responseText);
+        }
+      });
+    }
+
+    function cancelBooking(bookingId) {
+      let xhr = new XMLHttpRequest();
+      xhr.open('DELETE', `http://localhost:3000/api/bookings/${bookingId}`)
+      xhr.responseType = 'json';
+      xhr.send();
+
+      xhr.addEventListener('load', (event) => {
+        switch (xhr.status) {
+          case 204:
+            alert("Booking has been cancelled :)");
+            break;
+          default:
+            alert(xhr.responseText);
+        }
+      });
+    }
+  </script>
+  </head>
+  <body>
+    <main>
+    </main>
+  </body>
+</html>
+
+
+

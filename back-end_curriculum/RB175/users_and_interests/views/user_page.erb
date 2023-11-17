@@ -1,0 +1,12 @@
+<h1><%= @name %></h1>
+  <ul>
+    <li>Email: <%= @profile[:email] %></li>
+    <li>Interests: <%= @profile[:interests].join(", ") %></li>
+  </ul>
+
+<h4>Other Users:</h4>
+  <% @file.keys.each do |key| %>
+    <% if key != @name.to_sym %>
+      <li><a href="/users/<%= key %>"><%= key %></a></li>
+    <% end %>
+  <% end %>

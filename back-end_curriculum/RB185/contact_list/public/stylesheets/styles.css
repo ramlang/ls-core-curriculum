@@ -1,0 +1,128 @@
+html {
+  background-color: #9EE7DE;
+  min-height: 100%;
+}
+
+body {
+  box-sizing: border-box;
+  color: white;
+  font: normal 16px Helvetica, Arial, sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+main {
+  align-items: center;
+  clear: both;
+  display: flex;
+  flex-wrap: wrap;
+  height: 100vh;
+  justify-content: center;
+  margin: 0 auto;
+  width: 75%;
+}
+
+.welcome {
+  background-image: linear-gradient(#c3fee3, #c3feef, #c3fefb);
+  box-sizing: border-box;
+  border: 5px solid white;
+  font-weight: bold;
+  padding: 10px 30px 30px 30px;
+  overflow: hidden;
+  width: 1000px;
+  text-align: left;
+}
+
+.welcome h1{
+  font-size: 10vh;
+  margin-bottom: 30px;
+}
+
+.welcome p {
+  font-size: 2rem;
+  margin: 30px 0;
+}
+
+.welcome form {
+  font-size: 2rem;
+
+ 
+
+}
+
+.welcome label {
+  display: block;
+  margin-bottom: 20px;
+
+
+}
+
+input:focus {
+  outline: none !important;
+  border: 1px solid #a2d3c7;
+  /*box-shadow: 0 0 10px #719ECE;*/
+}
+
+form input, button {
+  box-sizing: border-box;
+  border: none;
+  border-radius: 10px;
+  font-size: 2rem;
+  padding: 10px;
+}
+
+form input[type="text"] {
+  color: #c3f5fe;
+  display: inline;
+  padding: 10px;
+  text-align: left;
+}
+
+button:hover {
+  background-color: #5ffcd4;
+}
+
+.enter {
+  color: white;
+  background-color: #c3fee3;
+  text-align: center;
+  width: 50%;
+}
+
+.list {
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.list h1 {
+  font-size: 3rem;
+}
+
+.link {
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #c3fee3;
+  text-align: center;
+  width: 100%;
+}
+
+.list ul {
+  box-sizing: border-box;
+  font-size: 2rem;
+}
+
+.flash {
+  max-width: 500px;
+  max-height: 30px;
+}
+
+.error {
+  background-color: #FF9999;
+  color: white;
+}
+
+.sucess {
+  background-color: #33FF99;
+}

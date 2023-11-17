@@ -1,0 +1,49 @@
+<h1>Add a New Expense</h1>
+<form class="form-add" action="/add_expense" method="post">
+  <dl>
+    <dt>
+      <label for="description">Description:</label>
+    </dt>
+    <dd>
+      <input name="description" placeholder="" type="text" value="">
+    </dd>
+    
+    <dt>
+      <label for="city">City:</label>
+    </dt>
+    <dd>
+      <input name="city" placeholder="" type="text" value="">
+    </dd>
+    
+    <dt>
+      <label for="country">Country:</label>
+    </dt>
+    <dd>
+      <input name="country" placeholder="" type="text" value="">
+    </dd>
+    
+    <dt>
+      <label for="cost">Cost ($):</label>
+    </dt>
+    <dd>
+      <input name="cost" placeholder="" type="text" value="">
+    </dd>
+    
+    <dt>
+      <label for="category-select">Category:</label>
+    </dt>
+    <dd>
+      <select name="category_id" id="category-select">
+        <option value="">--Select a category--</option>
+        <% @category_list.each do |tuple| %>
+          <option value="<%= tuple["id"] %>"><%= tuple["category"] %></option>
+        <% end %>
+      </select>
+    </dd>
+  </dl>
+  
+  <fieldset class="actions">
+    <input type="submit" value="Add">
+    <a href="/">Cancel</a>
+  </fieldset>
+</form>

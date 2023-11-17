@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Loading...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link href="vendor/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="vendor/prettify.css" rel="stylesheet" media="screen">
+  <link href="css/style.css" rel="stylesheet" media="screen, print">
+  <link href="img/favicon.ico" rel="icon" type="image/x-icon">
+  <style>
+
+    form {
+      text-align: left;
+      display: block;
+      background-color: cornsilk;
+      border: 2px solid burlywood;
+      border-radius: 10px;
+      padding-left: auto;
+      padding-right: auto;
+      margin: 10px;
+    }
+
+    label {
+      margin-left: 20px;
+      color:burlywood;
+      font-size: 18px;
+    }
+
+    h1 {
+      margin-left: 20px;
+      margin-bottom: 5px;
+      color: burlywood;
+      font-size: 24px;
+      padding: 10px;
+      width: auto;
+    }
+
+    input {
+      padding: 5px;
+      margin: 5px 30px;
+      border: 2px solid wheat;
+      border-radius: 5px;
+      color:burlywood;
+      background-color: white;
+      font-size: 18px;
+    }
+
+    select {
+      padding: 5px;
+      margin: 5px 30px;
+      border: 2px solid wheat;
+      border-radius: 5px;
+      color:burlywood;
+      background-color: white;
+      font-size: 18px;
+      width: 40%;
+    }
+
+    button {
+      background-color: lightpink;
+      color:white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      margin: 20px;
+    }
+  </style>
+  <script>
+
+    document.addEventListener('DOMContentLoaded', (e) => {
+      let ulDates = document.createElement('ul');
+      let main = document.querySelector('main');
+      main.appendChild(ulDates);
+
+      xhr = new XMLHttpRequest();
+      xhr.open('GET', 'http://localhost:3000/api/bookings/');
+      xhr.responseType = 'json';
+
+      xhr.send();
+
+      xhr.addEventListener('load', () => {
+        let dates = xhr.response;
+        let appointments = {};
+
+        dates.forEach((date) => {
+          let liDate = document.createElement('li');
+          liDate.textContent = date;
+          ulDates.append(liDate);
+
+          let xhr2 = new XMLHttpRequest();
+          xhr2.open('GET', `http://localhost:3000/api/bookings/${date}`)
+          xhr2.responseType = 'json';
+
+          xhr2.send();
+
+          xhr2.addEventListener('load', () => {
+            appointments[date] = xhr2.response;
+          });
+
+          liDate.addEventListener('click', () => {
+            console.log(liDate, liDate.firstElementChild);
+            if (liDate.children.length > 0) {
+              liDate.firstElementChild.remove();
+            } else {
+              let ulAppointments = document.createElement('ul');
+              let appointmentList = appointments[date];
+              liDate.appendChild(ulAppointments);
+
+              appointmentList.forEach((appointment) => {
+                let liAppointment = document.createElement('li');
+                ulAppointments.appendChild(liAppointment);
+                liAppointment.textContent = appointment.join(' | ');
+              });
+            }
+          });
+        })
+
+
+
+
+
+      });
+
+      // format and populate html <ul> elements
+      // create li elements within an object with array values
+      // this way the date can be accessed and return a list of nodes to view
+
+      // add click funcitonality to <ul> elements
+        // for each <ul> element display bookings listed under that date
+        // each listing should be a <li> element
+        // should appear when clicked and disappear when not clicked
+
+      // display details 
+    });
+    // function addSchedulesAsOption(list, staff) {
+    //   list.forEach((obj) => {
+    //     console.log(obj);
+    //     let option = document.createElement('option');
+    //     let staffName = staff[obj.staff_id];
+
+    //     option.value = obj.id;
+    //     option.textContent = `${staffName} | ${obj.date} | ${obj.time}`
+    //     select.appendChild(option);
+    //   });
+    // } 
+    
+  </script>
+  </head>
+  <body>
+    <main>
+      <h1>Bookings</h1>
+    </main>
+  </body>
+</html>
+
+
+

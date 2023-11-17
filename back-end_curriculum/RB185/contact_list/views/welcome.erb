@@ -1,0 +1,12 @@
+<section class="welcome">
+  <h1>Let's create a simple contact list!</h1>
+  <p>
+    Welcome to my RB175 project!<br>
+    Let's get started creating a contact list.
+  </p>
+  <form method="post" action="/welcome">
+    <label for="username">Enter your name:</label>
+    <input name="username" type="text" value="<%= params[:username] || @username %>">
+    <button type="submit" class="enter">Enter</button>
+  </form>
+</section>

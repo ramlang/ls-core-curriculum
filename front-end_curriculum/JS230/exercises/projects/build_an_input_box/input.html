@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <link rel="stylesheet" href="input.css">
+    <title>Input Box</title>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        let box = document.querySelector('.text-field');
+        let content = document.querySelector('.content');
+        let cursorId;
+        let length;
+
+        box.addEventListener('click', (event) => {
+          event.stopPropagation();
+          box.classList.add('focused');
+
+            cursorId = cursorId || setInterval(() => {
+              box.classList.toggle('cursor');
+            }, 500)
+        })      
+        
+        document.addEventListener('keyup', (event2) => {
+          if (box.classList.contains('focused')) {
+            if (event2.key !== 'Backspace') {
+              content.textContent += event2.key;
+            } else {
+              length = content.textContent.length;
+              let newString = content.textContent.slice(0,length - 1);
+              content.textContent = newString;
+            }
+          }
+        })
+
+        document.addEventListener('click', () => {
+          clearInterval(cursorId);
+          if (box.classList.contains('focused')) {
+            box.classList.remove('focused');
+            box.classList.remove('cursor');
+          }
+        })
+
+      });
+
+    </script>
+  </head>
+  <body>
+    <div class="text-field">
+      <div class="content"></div>
+    </div>
+  </body>
+</html>
+

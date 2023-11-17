@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tests</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <ul>
+      <li>Fruit</li>
+      <li>Vegetables
+        <ul>
+          <li>Root
+            <ul>
+              <li>Potatoes</li>
+              <li>Carrots
+                <ul>
+                  <li>Danvers</li>
+                  <li>Chantenay</li>
+                </ul>
+              </li>
+              <li>Herbs
+                <ul>
+                  <li>Cilantro</li>
+                  <li>Parsley</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>Lettuce</li>
+        </ul>
+      </li>
+    </ul>
+    <script>
+    
+      // function walkList() {
+      //   let ul = document.querySelector('ul');
+
+      //   function walk(node) {
+      //     for (let idx = 0; idx < node.childNodes.length; idx++) {
+      //       if (node.nodeName === "LI") {
+      //         console.log(node.firstChild.nodeValue.trim());
+      //         walk(node.childNodes[idx]);
+      //       }
+      //     }
+      //   }
+
+      //   return walk(ul);
+      // }
+
+      // walkList();
+
+function walkList() {
+  function walk(node, callback) {
+    callback(node);
+
+    for (let idx = 0; idx < node.childNodes.length; idx++) {
+      return walk(node.childNodes[idx], callback);
+    }
+  }
+
+  walk(document.querySelector('ul'), function(node) {
+    if (node.nodeName === "LI") {
+      console.log(node.firstChild.nodeValue.trim());
+    }
+  })
+}
+
+walkList();
+
+    //  > walkList();
+    //   Fruit
+    //   Vegetables
+    //   Root
+    //   Potatoes
+    //   Carrots
+    //   Danvers
+    //   Chantenay
+    //   Herbs
+    //   Cilantro
+    //   Parsley
+    //   Lettuce
+    </script>
+  </body>
+</html>
+
+
+<!-- Fruit test.html:41:21
+Vegetables 2 test.html:41:21
+Root 2 test.html:41:21
+Potatoes test.html:41:21
+Carrots 2 test.html:41:21
+Danvers test.html:41:21
+Chantenay test.html:41:21
+Carrots test.html:41:21 //////
+Herbs 2 test.html:41:21
+Cilantro test.html:41:21
+Parsley test.html:41:21
+Herbs test.html:41:21/////////
+Root test.html:41:21 /////////
+Lettuce test.html:41:21
+Vegetables ///////////////////--> 

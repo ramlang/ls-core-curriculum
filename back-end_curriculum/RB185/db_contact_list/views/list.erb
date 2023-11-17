@@ -1,0 +1,12 @@
+<section class="list">
+  <h1><%= @username.capitalize %>'s Contact List</h1>
+
+  <a href="/new" class="link">New Contact</a>
+  <% if @contact_list %>
+    <ul>
+      <% @contact_list.each do |hash| %>
+      <li><a href="/<%= hash[:id] %>"><%= hash[:name] %></a></li>
+      <% end %>
+    </ul>
+  <% end %>
+</section>

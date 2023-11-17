@@ -1,0 +1,53 @@
+<section>
+<header>
+ <%= @expense %>
+</header>
+  <form action="/edit/<%= @id %>" method="post">
+  <dl>
+    <dt>
+      <label for="description">Expense description:</label>
+    </dt>
+    <dd>
+      <input name="description" type="text" value="<%= @expense["description"] %>">
+    </dd>
+    
+    <dt>
+      <label for="city">City:</label>
+    </dt>
+    <dd>
+      <input name="city" type="text" value="<%= @expense["city"] %>">
+    </dd>
+    
+    <dt>
+      <label for="country">Country:</label>
+    </dt>
+    <dd>
+      <input name="country" type="text" value="<%= @expense["country"] %>">
+    </dd>
+    
+    <dt>
+      <label for="cost">Cost (USD):</label>
+    </dt>
+    <dd>
+      <input name="cost" type="text" value="<%= @expense["cost"] %>">
+    </dd>
+    
+    <dt>
+      <label for="category-select">Category:</label>
+    </dt>
+    <dd>
+      <select name="category_id" id="category-select">
+        <option value="">--Select a category--</option>
+        <% @category_list.each do |tuple| %>
+          <option value="<%= tuple["id"] %>"><%= tuple["category"] %></option>
+        <% end %>
+      </select>
+    </dd>
+  </dl>
+  
+  <fieldset class="actions">
+    <input type="submit" value="Save">
+    <a href="/">Cancel</a>
+  </fieldset>
+</form>
+</section>

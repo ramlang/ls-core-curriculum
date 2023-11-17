@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Loading...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link href="vendor/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="vendor/prettify.css" rel="stylesheet" media="screen">
+  <link href="css/style.css" rel="stylesheet" media="screen, print">
+  <link href="img/favicon.ico" rel="icon" type="image/x-icon">
+  <style>
+
+    .exercise2 {
+      background-color: cornsilk;
+      text-align: left;
+      border: 3px solid wheat;
+      display: block;
+      padding-left: auto;
+      padding-right: auto;
+      width: 50%;
+      margin: 10px;
+    }
+    .exercise2 label {
+      margin-left: 20px;
+      color:burlywood;
+      font-size: 18px;
+    }
+    .exercise2 input {
+      padding: 5px;
+      margin: 5px 30px;
+      border: 2px solid wheat;
+      border-radius: 5px;
+      color:burlywood;
+      font-size: 18px;
+    }
+
+    .exercise2 #button {
+      background-color: lightpink;
+      color:white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+    }
+  </style>
+  <script>
+
+  function retrieveSchedules() {
+    let request = new XMLHttpRequest();
+    request.open('GET', "http://localhost:3000/api/schedules");
+    request.responseType = 'json';
+    request.timeout = 5000;
+
+    function createTallyObject(array, property) {
+      let tally = {};
+
+      array.forEach((object) => {
+        let value = object[property];
+        tally.hasOwnProperty(value) ? object[value] += 1 : object[value] = 1;
+      })
+
+      return tally;
+    }
+    
+    request.addEventListener('load', () => {
+      let schedules = request.response;
+      
+      if (schedules.length > 0) {
+        let staffData = createTallyObject(schedules, 'staff_id');
+        let message = Object.keys(staffData).map((id) => {
+          return `staff ${id}: ${staffData[id]}`;
+        }).join('\n');
+
+        alert(message);
+      } else {
+        alert('There are no schedules available for booking ;A;');
+      }  
+    })
+    
+    request.addEventListener('timeout', () => {
+      console.log('Taking forever to load, please try again later :)');
+    })
+    
+    request.addEventListener('loadend', () => {
+      console.log('Congrats! Your request was completed :D');
+    })
+
+    request.send();
+  }
+
+  // Implement a form for adding new staff, and then use the booking app API to add the staff to the database. Your implementation should handle the different possible responses of the server and inform the user of the outcome.
+  document.addEventListener('DOMContentLoaded', () => {
+    let form = document.querySelector('.exercise2');
+
+    function formDataToJSON(data) {
+      const json = {};
+      for (const pair of data.entries()) {
+        json[pair[0]] = pair[1];
+      }
+
+      return json;
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      let formData = new FormData(form);
+      let request = new XMLHttpRequest();
+      request.open('POST', form.action);
+      request.setRequestHeader('Content-Type', 'application/json');
+      let json = JSON.stringify(formDataToJSON(formData));
+      request.send(json);
+
+      request.addEventListener('load', (event) => {
+        switch(request.status) {
+          case 201:
+            const data = JSON.parse(request.response);
+            alert(`It worked! A new staff with id ${data.id} was created!`);
+            form.reset();
+            break;
+          case 400:
+            alert(request.repsonseText)
+        }
+      })
+    });
+  });
+
+  </script>
+  </head>
+  <body>
+    <main>
+      <form method="post" action='/api/staff_members' class="exercise2">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" maxlength="50"/><br>
+        <label for="email">Name:</label>
+        <input type="text" id="name" name="name" maxlength="50"/><br>
+        <input type="submit" id="button"/>
+      </form>
+    </main>
+  </body>
+</html>
+
+
+

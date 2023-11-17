@@ -1,0 +1,34 @@
+<h1><%= @contact_info[:name] %></h1>
+<form method="post" action="/<%= @contact_info[:id] %>/edit">
+  <label for="name">Name:</label>
+  <input type="text" name="name" value="<%= @contact_info[:name] %>">
+  
+  <label for="phone">Phone Number:</label>
+  <input type="text" name="phone" value="<%= @contact_info[:phone] %>">
+  
+  <label for="email">Email:</label>
+  <input type="text" name="email" value="<%= @contact_info[:email] %>">
+  
+  <label for="group">Group:</label>
+  <select name="group" id="group">
+    <% case @contact_info[:group] %>
+    <% when "Friends" %>
+      <option selected>Friends</option>
+      <option>Family</option>
+      <option>Work</option>
+    <% when "Family" %>
+      <option>Friends</option>
+      <option selected>Family</option>
+      <option>Work</option>
+    <% when "Work" %>
+      <option>Friends</option>
+      <option>Family</option>
+      <option selected>Work</option>
+    <% end %>
+  </select>
+  
+  <button type="submit">Save</button>
+</form>
+<p>
+  <a href="/<%= @contact_info[:id] %>">Back</a>
+</p>

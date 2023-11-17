@@ -1,0 +1,15 @@
+<h1><%= @contact_info[:name] %></h1>
+<dl>
+  <% @contact_info.each do |key, value| %>
+    <dt><%= key %></dt>
+    <dd><%= value %></dd>
+  <% end %>
+</dl>
+
+<p><a href="/<%= @contact_info[:id] %>/edit">Edit</a></p>
+<p>
+  <form method="post" action="/<%= @contact_info[:id] %>/delete">
+    <button type="submit">Delete</button>
+  </form>
+</p>
+<p><a href="/"> Back to Home</a></p>

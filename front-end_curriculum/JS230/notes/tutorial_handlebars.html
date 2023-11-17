@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>jQuery Selectors</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.2/jquery.min.js"></script>
+    <script>
+      import Handlebars from "handlebars";
+    </script>
+
+    <script id="post" type="text/x-handlebars">
+      <article>
+        <h1>{{title}}</h1>
+        <p><time>Posted on {{published}}</time></p>
+        {{{body}}}
+      </article>
+      </ul>
+        {{#each tags}}
+          {{>tags}}
+        {{/each}}
+      </ul>
+    </script>
+
+    <script id="post_check" type="text/x-handlebars">
+        {{#each posts}}
+          {{>tags}}
+        {{/each}}
+    </script>
+
+    <script id="tags" type="text/x-handlebars">
+      <li>{{this}}</li>
+    </script>
+
+    <script id="post_check" type="text/x-handlebars">
+      <li>{{this}}</li>
+    </script>
+
+    <script>
+      let post = {
+        title: 'Lorem ipsum dolor sit amet',
+        published: 'April 1, 2015',
+        body: '<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.<p>',
+        tags: ['cooking', 'food', 'vegetables'],
+      };
+
+      let post2 = {
+        title: 'wey wook',
+        published: 'April 1, 2015',
+        body: 'widwards woing to work',
+      };
+
+      let posts = [];
+
+      let tags = Handlebars.registerPartial('#tags', $('#tag').html());
+      let template = Handlebars.compile($('#post').html());
+
+      template(post);
+      $('body').append(template);
+    </script>
+  </head>
+  <body>
+    
+  </body>
+</html>

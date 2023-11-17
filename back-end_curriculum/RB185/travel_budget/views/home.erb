@@ -1,0 +1,47 @@
+<section class="expenses">
+  <form action="/" method="post" class="sort options">
+    <div class="sorts">
+      <input type="radio" id="sort1" name="sort" value="category" >
+      <label for="sort1">Category</label>
+    </div>  
+    <div class="sorts">  
+      <input type="radio" id="sort2" name="sort" value="city" >
+      <label for="sort2">City</label>
+    </div>
+    <div class="sorts">
+      <input type="radio" id="sort3" name="sort" value="country" >
+      <label for="sort3">Country</label>
+    </div>
+    <div class="sorts">
+      <button type="submit">Sort</button>
+    </div>
+  </form>
+  
+  
+
+  <div class="block list">
+    <% @all_expenses.each do |hash| %>
+     <p class="sort block">
+      <span class="block name">
+        <a href="/<%= hash[@sort_value] %>"><%= hash[@sort_value] %></a>
+      </span>
+      <span class="block total">
+        $<%= hash["sum"] %>
+      </span>
+     </p>
+    <%end %>
+  </div>
+
+  
+  <% content_for :header_links do %>
+    <a class="add-expense" href="/add_expense">Add Expense</a>
+    <a class="setup" href="/setup">Add Category</a>
+    <form class="delete" action="/destroy_all" method="post">
+      <button type="submit" class="Reset">Reset</button>
+    </form>
+  <% end %>
+  
+  <% content_for :total do %>
+    <h2>Total: $<%= total_of_all_expenses || "0.00" %> (USD)</h2>
+  <% end %>
+</section>

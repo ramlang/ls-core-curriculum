@@ -1,0 +1,27 @@
+
+<section>
+  <h1><%= @value %></h1>
+  <ul>
+  <% @sub_expenses.each do |expense| %>
+    <li>
+      <h3><%= expense[:description] %></h3>
+      <p><%= "#{expense[:city]}, #{expense[:country]}" %></p>
+      <h3>$<%= expense[:cost] %></h3>
+      
+      <a href="/edit/<%= expense[:id] %>">Edit</a>
+      <form class="delete" action="/edit/<%= expense[:id] %>/destroy" method="post">
+          <button type="submit" class="delete">Delete</button>
+      </form>
+    </li>
+  <% end %>
+  </ul>
+  
+  <% content_for :header_links do %>
+    <a class="home" href="/">Back</a>
+    <a class="add-expense" href="/add_expense">Add Expense</a>
+  <% end %>
+  
+  <% content_for :total do %>
+    <h2>Total: $<%= total_of_sub_expenses(@sort_by_column, @value) %> (USD)</h2>
+  <% end %>
+</section>

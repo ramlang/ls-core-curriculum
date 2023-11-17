@@ -1,0 +1,19 @@
+<section class="setup">
+  <h1>Organize Your Expenses</h1>
+  <form action="/setup" method="post" class="setup-category-list">
+    <fieldset>
+      <legend>What categories would you like to include?</legend>
+      <div class="checkboxes">
+        <% remaining_categories.each do |category| %>
+          <div>
+            <input type="checkbox" id="<%= category %>" name="categories[]" value="<%= category %>">
+            <label for="<%= category %>"><%= category %></label>
+          </div>
+        <% end %>
+      </div>
+    </fieldset>
+    <div class="actions">
+        <input type="submit" value="Create">
+    </div>
+  </form>
+</section>

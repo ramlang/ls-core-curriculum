@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Fluid Layout Gallery</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="gallery.css" />
+  </head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.2/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+  <script>
+    /*
+
+    DEFAULT
+    => the first image should be "clicked" on when the page loads
+
+    for a click event (current photot) will need to...
+    
+    => When the thumbnails are clicked, perform the active class toggle
+    
+    =>  add styles that will change the color of the border around the thumbnail image
+
+     => Then, hide the currently visible image.
+        > FADE OUT EFFECT
+
+     => Finally, based on which thumbnail was clicked, locate the image that was requested and show that image.
+        > FADE IN EFFECT
+    */
+
+    $(function() {
+      let $allThumbnails = $('li').children('img');
+
+      $('li > img').on('click', function(e) {
+        let $thumbnail = $(this);
+        let source = this.src;
+        let title = this.title;
+
+        $allThumbnails.each(function(idx, elem) {
+          $(elem).removeClass('active');
+        });
+
+        $thumbnail.toggleClass('active');
+
+        $('figure').fadeToggle("slow", function(e) {
+          let $figure = $('figure');
+          $figure.fadeToggle("slow", function(e) {
+            $figure.attr('src', source);
+            $figure.find('figcaption').text(title);
+          });
+        });
+      });
+
+    });
+  </script>
+  <body>
+    <main>
+      <h1>My Photo Gallery</h1>
+      <figure>
+        <img src="https://fakeimg.pl/1200x900" alt="" />
+        <figcaption>Example photo</figcaption>
+      </figure>
+      <ul>
+        <li><img src="https://fakeimg.pl/1200x900" alt="" title="Photo 1" /></li>
+        <li><img src="https://fakeimg.pl/1200x900" alt="" title="Photo 2" /></li>
+        <li><img src="https://fakeimg.pl/1200x900" alt="" title="Photo 3" /></li>
+        <li><img src="https://fakeimg.pl/1200x900" alt="" title="Photo 4" /></li>
+      </ul>
+    </main>
+  </body>
+</html>
